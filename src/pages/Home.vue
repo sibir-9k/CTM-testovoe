@@ -2,60 +2,45 @@
 	<div class="container mt-4">
 		<h3>1. Статус поставки</h3>
 		<UserDirectory
-			v-model:modelValue="selectedStatus"
+			v-model="selectedStatus"
 			:items="statusOptions"
 			displayKey="description"
 			placeholder="Выберите статус" />
+		<p>Выбран статус: {{ selectedStatus }}</p>
 
 		<h3 class="mt-4">2. Режим перемещения</h3>
 		<UserDirectory
-			v-model:modelValue="selectedMode"
+			v-model="selectedMode"
 			:items="modeOptions"
 			displayKey="description"
 			placeholder="Выберите режим" />
-
-		<pre class="mt-3">Выбран статус: {{ selectedStatus }}</pre>
-		<pre>Выбран режим: {{ selectedMode }}</pre>
+		<p>Выбран режим: {{ selectedMode }}</p>
 	</div>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue';
 import UserDirectory from '../shared/ui/UserDirectory/index.vue';
-import type { StatusOption, ModeOption } from '../entities/delivery';
 
-const statusOptions = ref<StatusOption[]>([
-	{
-		code: 0,
-		description: 'Формируется',
-	},
-	{
-		code: 10,
-		description: 'Товар прибыл',
-	},
-	{
-		code: 20,
-		description: 'Товар прибыл (срочная поставка)',
-	},
-	{
-		code: 30,
-		description: 'Оформление ДТ',
-	},
-	{
-		code: 40,
-		description: 'ДТ выпущена',
-	},
-	{
-		code: 50,
-		description: 'Поставка закрыта',
-	},
-]);
+interface Option {
+	id: number;
+	description: string;
+}
 
-const modeOptions = ref<ModeOption[]>([
+const selectedStatus = ref<Option | null>(null);
+const selectedMode = ref<Option | null>(null);
+
+const statusOptions: Option[] = [
+	{ id: 0, description: 'Формируется' },
+	{ id: 1, description: 'Товар прибыл' },
+	{ id: 2, description: 'Срочная поставка' },
+	{ id: 3, description: 'Оформление ДТ' },
+	{ id: 4, description: 'ДТ выпущена' },
+	{ id: 5, description: 'Поставка закрыта' },
+];
+
+const modeOptions: Option[] = [
 	{ id: 1, description: 'Импорт' },
 	{ id: 2, description: 'Экспорт' },
-]);
-
-const selectedStatus = ref<StatusOption | null>(null);
-const selectedMode = ref<ModeOption | null>(null);
+];
 </script>
